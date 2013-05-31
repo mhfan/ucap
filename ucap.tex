@@ -1,0 +1,509 @@
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ % $ID: ucap.tex       Tue, 07 Sep 2004 23:30:19 +0800  mhfan $ %
+ %                                                              %
+ % Description:                                                 %
+ %                                                              %
+ % Maintainer:  范美辉(Meihui Fan)  <mhfan@ustc.edu>            %
+ %                                                              %
+ % CopyRight (c)  2004  HHTech                                  %
+ %   www.hhcn.com, www.hhcn.org                                 %
+ %   All rights reserved.                                       %
+ %                                                              %
+ % This file is free software;                                  %
+ %   you are free to modify and/or redistribute it  	        %
+ %   under the terms of the GNU General Public Licence (GPL).   %
+ %                                                              %
+ % Last modified: Fri, 03 Dec 2004 10:22:40 +0800      by mhfan #
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\listfiles % (should list the files loaded and it's versions).
+
+\documentclass[a4paper]{scrartcl}  % letter, article, scrartcl, report, book
+			% 封面和扉页 % coverpage & titlepage
+			% default is 10pt, letterpaper; letter
+
+\usepackage{CJK,ifthen,inputenc,fontenc}%,ipalmacs
+\usepackage{latexsym,amssymb,amsfonts,textcomp,pxfonts,txfonts,pifont,bbding}
+\usepackage{marvosym,stmaryrd,ifsym,tipa,ulsy,dingbat,ipa,wasysym,manfnt} %
+\usepackage{longtable,multirow,hhline,dcolumn,tabularx,array}
+\usepackage{makeidx,verbatim,fancybox}
+
+\usepackage{fancyhdr}	% fancy header & footer, box
+\newcommand{\makeheadrule}{         % 定义页眉横线
+  \rule[.7\baselineskip]{\headwidth}{1.2pt}\vskip-0.97\baselineskip
+  \rule[.6\baselineskip]{\headwidth}{0.4pt}}
+%  \makebox[-3pt][l]{\rule[.7\baselineskip]{\headwidth}{0.4pt}}
+%  \rule[0.85\baselineskip]{\headwidth}{1.5pt}\vskip-.8\baselineskip}
+  \makeatletter
+  \renewcommand{\headrule}{
+  	{\if@fancyplain\let\headrulewidth\plainheadrulewidth\fi}\makeheadrule}
+  \makeatother
+
+\usepackage{graphicx,subfigure,wrapfig}	% for graph
+\graphicspath {{./}{figs/}} % set graphics path
+\DeclareGraphicsExtensions{.eps,.ps,.eps.gz,.ps.gz,.jpg,.jpeg,.pdf,.gif,.png}
+\DeclareGraphicsRule{*}{mps}{*}{}
+
+\usepackage[a4paper,pdftex]{geometry}
+%\geometry{top=1.7cm,bottom=2cm,left=2.5cm,right=2.1cm}
+%\geometry{body={15.6cm, 20cm}, centering, dvipdfm}
+
+\usepackage[CJKbookmarks,dvipdf,bookmarks=true]{hyperref}
+% setup hyperref for PDF nevigation:
+  \hypersetup{colorlinks, linkcolor=blue, citecolor=blue, urlcolor=red,%
+	plainpages=true, bookmarksopen=false,%
+	pdfhighlight=/P, %/I(inverse) /N(no effect) /O(outline) /P(inset)
+	pdfauthor={Meihui Fan <mhfan@ustc.edu>},%
+	pdftitle={A LaTeX example collection},%
+	pdfsubject={LaTeX, TeX},%
+	pdfkeywords={LaTeX, TeX, Typesetting},%
+	pdfstartview=FitH, %FitBH, FitB
+	pdfview=FitH,
+	pdfpagemode=UseOutlines, %None, FullScreen, UseThumbs
+}
+
+\usepackage{listings} %[mathscope]
+  \lstloadlanguages{C++, bash, tcl, VHDL, Haskell, Lisp, TeX, Oz, Perl, make}
+  %\lstinline!char foo='c';!	% ! can be #, %, $, etc.
+  \lstset{language=C, tabsize=8, keepspaces=true,
+	columns=fixed, %flexiblecolumns=true,
+	numbers=left, stepnumber=1, numberstyle=\tiny,
+	basicstyle=\small\ttfamily, showspaces=false,
+	%identifierstyle=\color{blue},
+	stringstyle=\color{magenta},
+	keywordstyle=\color{green}\textbf,
+	commentstyle=\color{cyan}\bfseries\itshape,
+	%classoffset=2,
+	%morekeywords={typedef,struct,enum,int,long,unsigned},
+	%keywordstyle=[2]\color{green}\bfseries,
+	%breaklines=true, breakautoindent=true, breakindent=4em,
+	escapeinside={/*@}{@*/}
+}
+
+%\newcommand{}		% newcommand definition:
+%\renewcommand{}	% redefine command:
+%\renewcommand{\headrule}{}
+\renewcommand\labelitemi{\small\EightFlowerPetal}
+\renewcommand\labelitemii{\small\SixFlowerAltPetal}
+\renewcommand\labelitemiii{\small\FiveStarConvex}
+\setlength{\parskip}{4pt plus1pt minus1pt}
+
+% Don't report over-full v/h-boxes if over-edge is small.
+\vfuzz 2pt \hfuzz 2pt
+% indent 2 Chinese characters befor each paragraph.
+\setlength{\parindent}{2em} %\parskip 3mm
+\makeatletter		    % indent the first paragraph. [indentfirst]
+    \let\@afterindentfalse\@afterindenttrue
+    \@afterindenttrue
+\makeatother
+
+\begin{document} \begin{CJK}{GBK}{song}
+
+\pagestyle{fancy}
+%\lhead{} \chead{} \rhead{}
+\lfoot{M.H. Fan} %\rfoot{\today} \cfoot{}	% 第\thepage页（共\lastpage页）
+\CJKcaption{GB}
+
+\title{\Huge The {\color{blue}$\muup$C}linux {\color{blue}A}udio
+		 {\color{blue}P}layer \\ Document \vspace{1cm}} % 标题
+\author{Version 0.1 \vspace{1cm} \\
+Meihui Fan \\ {\CJKfamily{kai} 范~美~辉} \\	% 作者
+$<$\href{mailto:mhfan@ustc.edu}{mhfan@ustc.edu}$>$ \\
+% {{{
+%\texttt{<}\href{mailto:mhfan@ustc.edu}{mhfan@ustc.edu}\texttt{>} \\
+%\texttt{\#}, \textless, \textgreater, \textlangle, \textrangle
+					% E-mail: mhfan@163.com
+%中国科学技术大学，生命科学学院 \\	% organization
+%安徽省合肥市四号信箱4号楼404室，230027} % address
+%\textit{Laboratory of Structural Biology, School of Life Science, USTC} \\
+%\textit{Room 4-404, P.O.Box 4, Hefei, Anhui, 230027 P. R. China} \\
+% }}}
+\vspace{2cm} \\ Copyleft \textcopyleft{} \number\year{}~ HHTech. Co., Ltd.
+\footnote{\href{http://www.hhcn.com}{http://www.hhcn.com}} \\
+All rights reserved. \\ \\ {\CJKfamily{li} 华恒科技 版权所有} \vspace{1cm}
+}
+%\date{}		% 日期
+\maketitle \titlepage	% generate the title, 标题页
+
+\newcommand{\ucap}{{\color{blue}$\muup$CAP~}}
+
+\thanks{\bf\large ~ ~ ~Thanks}		% 致谢
+
+\vspace{1cm}
+特别感谢张翼在 ~\ucap 开发过程中的指导和帮助，
+感谢王刚在~\ucap 与 GUI 整合过程中的协同合作。
+此外，黄光华(yehuang)原来的实现给了我很多启发。
+
+\vspace{2cm}
+\begin{abstract}	% 摘要
+  {\bf\large Abstract}
+
+  \vspace{1cm} {\it Keywords: \bf Embedded, $\muup$Clinux, Audio Player, 
+Decoder, MP3, WMA, WAV, OGG.}	% 关键字
+\end{abstract}
+
+% {{{
+\newpage
+%\setcounter{tocdepth}{3}
+\tableofcontents	% 目录页
+%\listoffigures \listoftables
+
+\newpage
+%\thispagestyle{fancy}
+% }}}
+
+\renewcommand\thefootnote{\tiny\textcircled{\arabic{footnote}}}
+%\renewcommand\thefootnote{\tiny\makebox[0pt][l]{\circle}{\arabic{footnote}}}
+%\renewcommand\thefootnote{\scriptsize\ding{191 + \arabic{footnote}}}
+
+\section{Introduction} \label{}
+\ucap 是 {\color{blue}$\muup$C}linux {\color{blue}A}udio {\color{blue}P}layer 
+的首字母缩写。顾名思义，这是特别为我们华恒公司的 Forthgoer 项目
+\footnote{Forthgoer project: 华恒公司的硬盘 MP3 产品方案。}而设计开发的运行在
+$\muup$Clinux 操作系统下的嵌入式软件音频播放器\footnote{\ucap开始称为`mp3play'
+，最初由黄光华(yehuang)实现。}。
+
+\subsection{Prerequires}
+\ucap 的软硬件要求：(以下所列一般都是\emph{可以但不必须}的要求，请自己尝试其它
+的软硬件条件。)
+\begin{description}
+  \item[CPU:] Motorola ColdFile 5249.
+  \item[Memory:] SRAM $\geq$ 64 KB; SDRAM $\geq$ 16 MB.
+  \item[Board:] HHCF5249 develop board.
+  \item[OS platform:] $\muup$Clinux-dist-040513.
+  \item[Toolchain:] m68k-elf-tools20030314.
+  \item[Libraries:] $\muup$C-libc.
+\end{description}
+
+\subsection{Features}
+\ucap 的设计开发目标是全面降低音频解码回放过程中的硬件功耗，同时兼顾用户操作的
+响应。它的主要特性包括：
+\begin{itemize}
+  \renewcommand\labelitemi{\Checkmark}
+  \item CPU 占用率低。经不严格的粗略测试， \ucap 在对各种音频格式进行正常的连
+    续解码回放过程中，其 CPU(MCF5249: 工作频率 140 MHz) 占用率不超过 \%25。
+  \item 磁盘访问率低。充分利用主存资源做为解码器的磁盘缓存，从而有效降低磁盘访
+    问率。
+  \item 快速的用户操作响应。从播放的起始到连续的快进、快退等都力求让用户感觉不
+    到响应延迟。
+  \item 支持 MP3、WMA、WAV、OGG(尚未加入) 等音频格式的解码回放。
+  \item 正常处理音频文件中的标签信息(中文简繁体和英文等)。
+  \item 支持 A-B 段记忆回放功能(尚未完全实现)。
+\end{itemize}
+
+\section{Design Scheme} \label{}
+\ucap 的主要设计思想是开辟空闲的 SDRAM 内存空间作为音频编码文件的磁盘缓存，以
+尽可能地减少磁盘访问，从而达到节能省电的最终目的。
+
+由于缓存空间较大，为了使最终用户感觉不到缓存(延时)的存在，我们需要让播放器解码
+‘动作’和磁盘缓存‘动作’分别是两个并发执行的进程。所以必须小心定义这两个同步
+进程的通讯机制。
+
+\subsection{Program Flow}
+现把 \ucap 的主要程序流程(程序流程图见图\ref{fig:main-flow})简要描述如下：
+
+\ucap 正常启动(由 GUI fork 出来，或者直接命令行启动)之后首先按照既定的播放模式
+初始化播放列表，然后 fork 出磁盘缓冲进程(hdload)并同步等待其初始化完成，接着打开
+并初始化设置声卡设备(/dev/dsp)，最后进入回放循环。
+
+在回放循环中，依据播放列表中当前要播放的文件的音频格式调用相应的解码器。在解码
+器初始化完成之后进入解码循环之前处理并输出歌曲的标签信息(标题和作者)在解码
+循环中(具体来说在每个解码单元的解码完成之后即将输出之前)处理用户指令(改变
+播放模式，快进快退等)和输出播放进度(播放时间和播放比例)。
+
+\subsection{Buffering}
+磁盘缓冲是~\ucap 实现的关键。
+
+\subsubsection{Size \& Allocation}
+为了减小启动的延时，我们让操作系统预留出8 MB 的 SDRAM 空间做为公共的缓存和
+共享内存使用。当然，这不是必须的；稍作修改就可以利用malloc 来分配缓存空间。
+
+这些缓存空间等分成固定大小(16 KB)的缓存单位，并以双向链表的数据结构来组织。选
+择使用双向链表完全是为了访问的快速和实现的方便，实际上对于连续的缓存空间来说这
+里应该还有改进的空间。
+
+\subsubsection{Strategy}
+为了尽可能地减少磁盘访问，我们采用全缓冲的策略。具体来说，就是尽量填满缓存空间
+；并且在正常的顺序缓冲的情况下，每次缓冲一开始就重新缓存全部空间。当然在细节的
+实现上必须考虑一些异常的特殊情况，包括：
+
+\begin{itemize}
+  \item 大文件的缓冲策略。
+  \item 文件的缓冲区覆盖问题。
+  \item 播放时，快进快退操作对缓冲的影响。
+\end{itemize}
+
+\subsection{Inter Processes Communication}
+系统中与音频解码回放相关的进程主要有三个：GUI 进程，回放进程和硬盘缓冲进程；它
+们之间主要是协同关系。在实现中我们主要用信号量来同步进程，用共享内存来做通信。
+因为用信号量做同步简单而有效，而在 $\muup$C 系统中，各进程共用同一个地址空间，
+用共享内存做通信最为方便。
+
+\section{Audio Decoder}
+\subsection{MP3 Decoder}
+关于 MP3 解码器接口的细节请参考：\ref{mp3dec}、\ref{mp3demo}、\ref{mp3idd}。
+\begin{description}
+  \item[{\ttfamily mp3d\_ptr}]: 指向 MP3 解码器结构的指针。
+  \item[{\ttfamily init\_mp3d()}]: 初始化 MP3 解码器。
+  \item[{\ttfamily mp3\_info()}]: 计算 MP3 的码流信息。
+  \item[{\ttfamily mp3\_decode\_loop()}]: MP3 解码循环。
+  \item[{\ttfamily mp3d\_->fun\_ptr\_MP3D\_decode\_frame}]: 解码一个缓冲区中的
+    编码帧。
+  \item[{\ttfamily mp3d\_swap\_buffers(char**pbuf, int*plen)}]: 切换 MP3 的解
+    码缓冲区。
+    \\ {\color{red}注意}：这个函数的接口调用存在 Bug(pbuf 的类型不一致，所以它
+不能正确传递缓冲区的地址)。必须在实现的时候把缓冲区的地址直接赋给全局变量──
+`{\ttfamily mp3d\_ptr->tbl\_MP3D\_in\_buf\_ptr}'。
+\end{description}
+
+\subsection{WMA Decoder}
+关于 WMA 解码器接口的细节请参考：\ref{wmadec}、\ref{wmademo}、\ref{wmaidd}。
+\begin{description}
+  \item[{\ttfamily init\_wmad()}]: 初始化 WMA 解码器。
+  \item[{\ttfamily wma\_info()}]: 处理 WMA 的标签信息，并做编码转换。
+  \item[{\ttfamily wma\_decode\_loop()}]: WMA 解码循环。
+  \item[{\ttfamily \_Linux\_WMAD\_FileDecodeDataSubFrames}]: 解码一个缓冲区。
+  \item[{\ttfamily \_Linux\_WMAD\_Get\_New\_Data(unsigned char **pbuf, int 
+  *plen, int *poff, int *need\_seek)}]: 获取新的解码缓冲区。
+    \\ {\color{red}注意}：这几个参数在内存(SRAM)中的位置是固定的！
+\end{description}
+
+\subsection{WAV Decoder}
+\begin{description}
+  \item[{\ttfamily init\_wavd()}]: 初始化 WAV 解码器。
+  \item[{\ttfamily wav\_info()}]: 处理 WAV 文件的相关信息。
+  \item[{\ttfamily wav\_GetFrequency()}]: 取得 WAV 编码的频率。
+  \item[{\ttfamily wav\_GetTotalTime()}]: 取得 WAV 编码总播放时间。
+  \item[{\ttfamily wav\_GetDecodedTime()}]: 取得当前解码耗费时间。
+  \item[{\ttfamily wav\_AdpcmDecode()}]: 解码一个缓冲区。
+\end{description}
+
+\subsection{OGG Decoder}
+有待实现 \ldots
+
+\section{C Functions Prototype} \label{}
+C 语言函数原型和有关实现细节的一些说明。
+
+\lstinputlisting[%inputencoding=cp936, extendedchars=true,
+	linerange={1-20,144-169},
+	title=Common Definitions and Data Structures
+	]{common.h} \label{common-data}
+
+\subsection{hdload}
+音频文件的磁盘缓冲进程。
+
+\subsubsection{Data Structure} \label{hdload-data-struct}
+\begin{description}
+  \item[BufInfo]: 双向链接的缓冲区列表。
+\end{description}
+Refer to \ref{common-data}。It is self-documented.
+
+\subsubsection{Application Interface}
+\begin{description}
+  \item[hdload()]: 从硬盘文件中填充缓冲区。
+\end{description}
+
+\subsubsection{Program Flow}
+程序流程主要是：
+\begin{enumerate}
+  \item \ldots
+\end{enumerate}
+%见图\ref{fig:hdload-flow}。
+
+\subsection{\ucap}
+音频解码和回放进程。
+
+\subsubsection{Data Structure}
+\begin{description}
+  \item[PlayList]: 播放列表(not a real list)。
+  \item[FileInfo]: 双向链接的播放文件信息列表。
+\end{description}
+Refer to \ref{common-data}。They are self-documented.
+
+\subsubsection{Application Interface}
+\begin{description}
+  \item[{\ttfamily init\_playlist()}]: 根据播放规则初始化播放列表。
+  \item[{\ttfamily reset\_playlist()}]: 在遍历播放列表之后，根据播放模式重排播
+  放列表。
+  \item[{\ttfamily proc\_cmd()}]: 在解码循环中处理用户提交的播放命令。
+  \item[{\ttfamily preload()}]: 在切换解码缓冲区和切换播放歌曲时，缓冲文件。
+  \item[{\ttfamily play\_progress()}]: 计算播放进度。
+\end{description}
+
+\subsubsection{Program Flow}
+程序流程主要是：
+\begin{enumerate}
+  \item \ldots
+\end{enumerate}
+%见图\ref{fig:ucap-flow}。
+
+\section{GUI~$\rightleftharpoons$~UCAP Shared Memory} \label{}
+\subsection{Proposed Shared Memory Structure}
+\lstinputlisting[%inputencoding=cp936, extendedchars=true,
+	linerange={1-20,65-94},
+	title=GUI~$\rightleftharpoons$~\ucap
+	Shared Memory Definition]{shmem.h}
+
+\subsection{Communication Mechanism}
+\subsubsection{GUI~$\rightharpoonup$~\ucap}
+\subsubsection{GUI~$\leftharpoondown$~\ucap}
+
+\begin{verbatim}
+/* 
+ *  几点说明：
+ *
+ * 1. 共享内存采用结构体定义以增加可维护性和可移植性。
+ *
+ * 2. 数值信息尽量定义为 int 以提高存储效率。
+ *
+ * 3. 数值信息的有效性可以用正负值来标志
+ *	（比如：规定正值有效──比特率的负值表示`VBR'）。
+ *
+ * 4. 播放规则不显式区分所有文件、某一目录、单个文件等，
+ *	只分为顺序播放、随机播放、循环播放以及三者的组合情况
+ *	（如：顺序循环、随机循环）；
+ *	要求 GUI 每次都给出当前需要播放的文件列表的首尾指针
+ *	（建议采用前闭后开区间的方式）。
+ *
+ * 5. 通讯协议：（暂可按照原先的定义）。
+ *	（个人觉得采取管道方式实现更简单一些，
+ *	同时也可以避免过多的休眠状态）。
+ *
+ * 6. 通讯过程：
+ *	(1). GUI ==> UCAP:
+ *	    a. GUI fork 启动 UCAP，置：	    shm->sign  = 1
+ *		并置：		    shm->comm  = COMM_INVALID，
+ *		然后等待 UCAP 的反馈：	    shm->comm ?= COMM_READY；
+ *		如果反馈成功则置：	    shm->comm  = COMM_INVALID；
+ *
+ *	    b. 用户出发新的命令时，GUI 置   shm->comm  = COMM_COMMAND，
+ *		然后等待 UCAP 的反馈：	    shm->comm ?= COMM_SUCCESS；
+ *		如果 shm->comm == COMM_FAILD，则重发命令（重复 b 步骤）；
+ *		如果成功则置：		    shm->comm  = COMM_INVALID；
+ *
+ *	    c. 注意：
+ *		每次通讯成功，GUI 必须置：  shm->comm  = COMM_INVALID；
+ *
+ *	(2). UCAP ==> GUI:
+ *	    a. UCAP 由 GUI fork 启动后置    shm->comm  = COMM_READY；
+ *
+ *	    b. UCAP 每帧解码前检查：	    shm->comm ?= COMM_COMMAND;
+ *		若是则读取命令字并做相应处理，
+ *		同时置：		    shm->comm  = COMM_SUCCESS，
+ *		若命令无效，置：	    shm->comm  = COMM_FAILD；
+ *
+ *	    c. 注意：
+ *		每次UCAP要反馈时，必须检查：shm->comm ?= COMM_INVALID；
+ *
+ */
+\end{verbatim}
+
+\section{Problems \& BUGs} \label{}
+留存的问题、Bug，以及计划实现的特性：
+
+\begin{itemize}
+  \item A-B 段记忆回放功能的实现有待测试。
+  \item 进程间同步通信过程仍有改进的空间。
+  \item \ldots
+\end{itemize}
+
+\section{Experience} \label{}
+
+以下是我个人关于 \ucap 开发过程中的一些经验总结。
+\subsection{Compilation \& Linking}
+鉴于 $\muup$C 系统内存管理的薄弱，它不适于引入动态连接和加载的机制。所以基于 
+$\muup$C 的应用开发通常利用静态编译。
+
+一个静态连接库文件实际上只是编译对象文件 (object) 的汇集。连接器在连接的时候，
+从左到右地扫描每个对象文件，依此分析和重定位其中的符号，并收集其中的未定义符号
+；在这个过程中每遇到一个静态连接库文件就查询和重定位已收集的未定义符号。重定位
+后符号的位置与文件之间的顺序有极大的关系，所以对于短指针类型的符号在连接的时候
+应该把它们所在的文件尽可能地靠近。
+
+\subsection{Some Macros}
+\begin{description}
+  \item[GUI\_CONTROL]: 打开与 GUI 进程同步通信的机制，接受 GUI 的播放控制。
+  \item[CLI\_CONTROL]: 接受命令行(标准输入)的控制序列，并在标准输出给出播放状
+    态的信息；可以与 ``GUI\_CONTROL''宏并存。
+  \item[DEBUG]: 在标准错误上输出调试信息。
+  \item[DUMP\_OUTPUTS]: 将音频解码输出存储为文件。
+  \item[Others]: Refer to `include/common.h'.
+\end{description}
+
+\subsection{Development Details}
+\begin{itemize}
+  \renewcommand\labelitemi{\Coffeecup}
+  \item MCF5249 is a \emph{big-endian} machine.
+  \item 嵌入式平台 IDE 接口的磁盘访问速度低，
+    故存储器映射文件并不能显著提高效率。
+  \item $\muup$C-libc 的信号通讯机制的实现似乎不完善，
+    setsigjmp/siglongjmp 不能正常地自动恢复信号屏蔽/阻塞。
+  \item 信号相当于软中断，所以要注意在‘中断处理程序’中‘清中断’(即在信号处
+  理程序中阻塞信号)。
+  \item \ldots \ldots
+\end{itemize}
+
+\newpage
+\thebibliography{99}
+\makeatletter \renewcommand\@biblabel[1]{#1} \makeatother
+%\cite[append-info]{keyword}
+%\begin{thebibliography}{label-style}
+%\bibitem[label]{keyword}text-item
+\bibitem[\HandRight]{mp3ext}
+  ``{\it MP3 Extensions}'', Alex Beregszaszi, November 28, 2003.
+  (\href{http://home.pcisys.net/~melanson/codecs/mp3extensions.txt}
+	{http://home.pcisys.net/~melanson/codecs/mp3extensions.txt}) \\
+  {\sl provide the informal explaination of MP3 Xing VBR header,
+	LAME header, etc.}
+
+\bibitem[\HandRight]{mp3dec}
+  ``{\it MP3 Decoder on $\muup$Clinux Release Notes}'',
+  V 0.4, Motorola India Electronics Pvt. Limited, 2004.
+
+\bibitem[\HandRight]{mp3demo}
+  ``{\it MP3 Decoder on $\muup$Clinux Demo User Manual}'',
+  V 0.4, Motorola India Electronics Pvt. Limited, 2004.
+
+\bibitem[\HandRight]{mp3idd}
+  ``{\it Interface Definition Document for MP3 Decoder on $\muup$Clinux}'',
+  V 1.3, Motorola India Electronics Pvt. Limited, 2004.
+
+\bibitem[\HandRight]{wmadec}
+  ``{\it WMA Decoder on $\muup$Clinux Release Notes}'',
+  V 0.4, Motorola India Electronics Pvt. Limited, 2004.
+
+\bibitem[\HandRight]{wmademo}
+  ``{\it WMA Decoder on $\muup$Clinux Demo User Manual}'',
+  V 0.4, Motorola India Electronics Pvt. Limited, 2004.
+
+\bibitem[\HandRight]{wmaidd}
+  ``{\it Interface Definition Document for WMA Decoder on $\muup$Clinux}'',
+  V 1.3, Motorola India Electronics Pvt. Limited, 2004.
+
+\bibitem[\HandRight]{apue}
+  ``{\it Advanced Programming in the UNIX Environment}'', W. Richard Stevens, 
+  1992, Addison Welsley Publishing Company.
+
+%\end{thebibliography}
+\nocite{*}
+%\bibliography{biblio}	% 参考资料
+%\bibliographystyle{plain}	% unsrt, alpha, abbrev
+
+\newpage
+\begin{appendix}	% 附录
+    \renewcommand{\thesection}{附录\Alph{section}}
+    %\addcontentsline{toc}{section}{\thesection~~}
+    \appendix \section{Part of C sources}
+\lstinputlisting[%inputencoding=cp936, extendedchars=true,
+	%linerange={83-176},
+	title=Implememtion of `hdload']{hdload.c} \label{common-data}
+
+\lstinputlisting[%inputencoding=cp936, extendedchars=true,
+	%linerange={83-176},
+	title=Implememtion of `ucap']{ucap.c} \label{common-data}
+\end{appendix}
+
+%\printidx
+\end{CJK} \end{document}
+
+ %%%%%%%%%%%%%%%%%%%% End Of File: ucap.tex %%%%%%%%%%%%%%%%%%%%
